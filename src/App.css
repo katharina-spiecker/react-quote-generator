@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+  display: flex;
+  max-width: 100%;
+  justify-items: center;
+}
+
+#quoteBox {
+  padding: 20px;
+  color: white;
+  width: 80%;
+  justify-self: center;
+}
