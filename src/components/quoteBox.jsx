@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import NewQuote from "./newQuote";
 import ShareIcons from "./shareIcons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
@@ -7,9 +6,8 @@ import "../App.css";
 
 class quoteBox extends Component {
   state = {
-    currentQuote: "First quote",
-    currentAuthor: "first author",
-    backgroundColor: "",
+    currentQuote: "Those who dare to fail miserably can achieve greatly.",
+    currentAuthor: "- John F. Kennedy",
   };
 
   getQuote = () => {
@@ -21,38 +19,41 @@ class quoteBox extends Component {
       .then((data) => {
         randomIndex = Math.floor(Math.random() * data.quotes.length + 1);
         this.setState({ currentQuote: data.quotes[randomIndex].quote });
-        this.setState({ currentAuthor: data.quotes[randomIndex].author });
+        this.setState({
+          currentAuthor: "- " + data.quotes[randomIndex].author,
+        });
       });
-  };
-  i = 0;
-
-  getStyle = () => {
-    const backgroundColors = ["#34eb64", "#34eb99", "#ed5a5a", "#b31212"];
-    if (this.i === backgroundColors.length) this.i = 0;
-    this.setState({ backgroundColor: backgroundColors[this.i] });
-    this.i++;
   };
 
   handleClick = () => {
     this.getQuote();
-    this.getStyle();
+    this.props.onColorUpdate();
   };
 
   render() {
     return (
       // new quote
-      <div
-        id="quoteBox"
-        style={{ backgroundColor: this.state.backgroundColor }}
-      >
+      <div id="quoteBox" style={{ color: this.props.currentColor }}>
         <div>
-          <FontAwesomeIcon icon={faQuoteLeft} />
-          <p>{this.state.currentQuote}</p>
-        </div>
-        <p>{this.state.currentAuthor}</p>
-        <div>
-          <ShareIcons />
-          <button onClick={this.handleClick}>Next inspiration</button>
+          <div class="row first-row">
+            <FontAwesomeIcon icon={faQuoteLeft} />
+            <p>{this.state.currentQuote}</p>
+          </div>
+
+          <p>{this.state.currentAuthor}</p>
+
+          <div class="row last-row">
+            <ShareIcons color={this.props.currentColor} />
+            <button
+              className="button"
+              onClick={this.handleClick}
+              style={{
+                backgroundColor: this.props.currentColor,
+              }}
+            >
+              Next inspiration
+            </button>
+          </div>
         </div>
       </div>
     );
