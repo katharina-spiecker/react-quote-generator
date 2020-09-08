@@ -17,7 +17,7 @@ class quoteBox extends Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        randomIndex = Math.floor(Math.random() * data.quotes.length + 1);
+        randomIndex = Math.floor(Math.random() * data.quotes.length);
         this.setState({ currentQuote: data.quotes[randomIndex].quote });
         this.setState({
           currentAuthor: "- " + data.quotes[randomIndex].author,
@@ -40,20 +40,20 @@ class quoteBox extends Component {
             <p>{this.state.currentQuote}</p>
           </div>
 
-          <p>{this.state.currentAuthor}</p>
+          <i>{this.state.currentAuthor}</i>
+        </div>
 
-          <div class="row last-row">
-            <ShareIcons color={this.props.currentColor} />
-            <button
-              className="button"
-              onClick={this.handleClick}
-              style={{
-                backgroundColor: this.props.currentColor,
-              }}
-            >
-              Next inspiration
-            </button>
-          </div>
+        <div class="row last-row">
+          <ShareIcons color={this.props.currentColor} />
+          <button
+            className="button btn-padding"
+            onClick={this.handleClick}
+            style={{
+              backgroundColor: this.props.currentColor,
+            }}
+          >
+            Next inspiration
+          </button>
         </div>
       </div>
     );
